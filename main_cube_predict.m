@@ -35,38 +35,37 @@ tbname_speed = 'changan_ew_avgspeed';
     % content=tt of ith cube
     % tt_sum:array(288,517):content=tt of road
 
-%% calc_link_param
+        % %% calc_link_param if needed
+        %     % change here : update bin_length,mini,maxi used for vector_to_string
+        % for nth_cube = 1:(length(cube_longlat)-1)
+        %     tt15_tt85 = quantile(avg_tt{nth_cube}(:),[0.15,0.85]);
+        %     mini(nth_cube) = tt15_tt85(1);
+        %     maxi(nth_cube) = tt15_tt85(2);
+
+        %     % initiation of cubes
+        %     cubes(nth_cube).param = [];
+        % end
+        % bin_length = 0.1;    % single = length of time(s) to discriminate symbols
+        % interval = 1;
+        % alpha = 1.2;
+
+
+        % cubes = calc_cube_param(cubes,avg_tt,bin_length,mini,maxi,interval,alpha);
+        %     % output:(1)avg_tt:cellarray,num=num of link,avg_tt(i):array(288,577),
+        %     % content=tt of ith link;(2)cubes: struct array:1-params
+
+        % %% plot cube-time color map at nth_wkday
+        %     % change here: 7 to 8 if want all year
+        % for nth_wkday = 1:7
+        % 	plot_cube_predict(cubes,nth_wkday,link_matname);
+        %     close all;
+        % end
+
     % change here : update bin_length,mini,maxi used for vector_to_string
-for nth_cube = 1:(length(cube_longlat)-1)
-    tt15_tt85 = quantile(avg_tt{nth_cube}(:),[0.15,0.85]);
-    mini(nth_cube) = tt15_tt85(1);
-    maxi(nth_cube) = tt15_tt85(2);
+save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','param');
 
-    % initiation of cubes
-    cubes(nth_cube).param = [];
-end
-bin_length = 0.1;    % single = length of time(s) to discriminate symbols
-interval = 1;
-alpha = 1.2;
-
-
-cubes = calc_cube_param(cubes,avg_tt,bin_length,mini,maxi,interval,alpha);
-    % output:(1)avg_tt:cellarray,num=num of link,avg_tt(i):array(288,577),
-    % content=tt of ith link;(2)cubes: struct array:1-params
-
-%% plot cube-time color map at nth_wkday
-    % change here: 7 to 8 if want all year
-for nth_wkday = 1:7
-	plot_cube_predict(cubes,nth_wkday,link_matname);
-    close all;
-end
-
-%% calc road unreliability param
-    % change here : update bin_length,mini,maxi used for vector_to_string
-% tt15_tt85 = quantile(tt_sum(:),[0.15,0.85]);
-% mini = tt15_tt85(1);
-% maxi = tt15_tt85(2);
-
+%% calc road unreliability param (front hour version)
+load([link_matname,'.mat']);    % temp calc for taking front 1hour
 mini = 0;
 maxi = 1500;
 bin_length = 20/40*length(avg_tt);    % single = length of time(s) to discriminate symbols
@@ -79,5 +78,4 @@ param = calc_road_param(tt_sum,bin_length,mini,maxi,interval,alpha);
 plot_road_predict(param,link_matname);
 plot_road_predictnorm(param,link_matname);
 
-%%save important variables
-save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','param');
+

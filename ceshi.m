@@ -3,7 +3,7 @@ A = link_to_ring(link);
 A = points_interp(ring_longlat,100);
 
 tic;
-data_source = dlmread('G:\2015_Autumn\毕设\快速路提取\处理后外环gaode_2015_11_1.txt');
+data_source = dlmread('G:\2015_Autumn\卤脧脡猫\驴矛脣脵脗路脤谩脠隆\麓娄脌铆潞贸脥芒禄路gaode_2015_11_1.txt');
 toc;
 B = dailydata_to_tsstruct(data_source(:,1),data_source(:,2:3),data_source(:,4),...
                         A,5);
@@ -35,7 +35,7 @@ patch('Faces',f,'vertices',points,'FaceVertexCData',color,'FaceColor','flat')
 
 tsplot(A,D);
 
-mif_folder = 'g:\transport_research\可预测性\路段选择\路段分向选择\';
+mif_folder = 'g:\transport_research\驴脡脭陇虏芒脨脭\脗路露脦脩隆脭帽\脗路露脦路脰脧貌脩隆脭帽\';
 mid_cnum = [1,3,4,5,6];	
 midmif_to_longlat(mif_folder,mid_cnum);
 
@@ -43,7 +43,7 @@ link_matnmae = 'west3th_ring_sn';
 load([mif_folder,link_matnmae,'.mat']);
 
 
-@g:\transport_research\可预测性\高德全年数据\oracle2csv.sql;
+@g:\transport_research\驴脡脭陇虏芒脨脭\赂脽碌脗脠芦脛锚脢媒戮脻\oracle2csv.sql;
 
 X = magic(6);
 k = find(X,4,'last');
@@ -86,6 +86,9 @@ Data = curs.Data;
 
 
 
+% extract 1:50:end from 1:100 and their front 10 nums
+T = 1:1000;
+extract_T = T((mod(1:length(T),50)>=-9 & mod(1:length(T),50)<=1) | (mod(1:length(T),50)>=41 & mod(1:length(T),50)<=51));
 
 
 

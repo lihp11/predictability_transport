@@ -1,9 +1,9 @@
 function [string,n] = vector_to_string(vector,bin_length,mini,maxi)
-% vector£ºnum vec
+% vector:num vec
 % bin_length: length of bin
 % mini:the vector's min
 % maxi: the vector's max
-% output£ºstring£ºstring with n+2 symbols,length=length(string)
+% output:string:string with n+2 symbols,length=length(string)
 
 n = ceil((maxi-mini)/bin_length); % num of bin between limit
 maxi = mini + n*bin_length;	% update maxi to make each bin_length equal
