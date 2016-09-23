@@ -16,7 +16,7 @@ create table changan_ew
 	--infile,talbename,cname:change here
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\可预测性\高德全年数据\changan_ew.txt'
+infile 'g:\transport_research\predictability\data_gaode_year\changan_ew.txt'
 into table changan_ew
 replace
 FIELDS TERMINATED BY ','
@@ -32,7 +32,7 @@ TRAILING NULLCOLS
 	road_id
 )
 --3.cmd   change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\changan_ew.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\changan_ew.ctl
 --4.create index on frequent query col
 create index timeIdx on changan_ew
 (
@@ -63,7 +63,7 @@ order by mesh,road_id,year,month,day,nth_5min;
 
 --6.sqlplus export big table to csv file
 
-@g:\transport_research\可预测性\高德全年数据\changan_ew_oracle2csv.sql;
+@g:\transport_research\predictability\data_gaode_year\changan_ew_oracle2csv.sql;
 
 		
 -- add col for bigtable and create smalltable
@@ -75,7 +75,7 @@ create table changan_ew100index(
 	nth_100m number(4,0)
 );
 --4.cmd sqlloader nth_100m
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\changan_ew_loadindex.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\changan_ew_loadindex.ctl
 -- --5.update big table using small table (bug)
 -- update changan_ew a ,changan_ew100index b
 -- set a.nth_100m=b.nth_100m;
@@ -159,7 +159,7 @@ create table changan_ew_tsi
 		);
 
 --2 cmd  change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\changan_ew_tsi.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\changan_ew_tsi.ctl
 --3 calc avgspeed
 drop table changan_ew_avgspeed;
 create table changan_ew_avgspeed as

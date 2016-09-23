@@ -1,6 +1,6 @@
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\可预测性\高德全年数据\changan_we.txt'
+infile 'g:\transport_research\predictability\data_gaode_year\changan_we.txt'
 into table changan_we
 replace
 FIELDS TERMINATED BY ','

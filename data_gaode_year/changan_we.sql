@@ -16,7 +16,7 @@ create table changan_we
 	--infile,talbename,cname:change here
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\可预测性\高德全年数据\changan_we.txt'
+infile 'g:\transport_research\predictability\data_gaode_year\changan_we.txt'
 into table changan_we
 replace
 FIELDS TERMINATED BY ','
@@ -32,7 +32,7 @@ TRAILING NULLCOLS
 	road_id
 )
 --3.cmd   change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\changan_we.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\changan_we.ctl
 
 
 --use changan_we_tsi to compute avgspeed
@@ -50,7 +50,7 @@ create table changan_we_tsi
 		);
 
 --2 cmd  change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\changan_we_tsi.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\changan_we_tsi.ctl
 --3 calc avgspeed
 drop table changan_we_avgspeed;
 create table changan_we_avgspeed as

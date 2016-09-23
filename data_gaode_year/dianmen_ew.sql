@@ -16,7 +16,7 @@ create table dianmen_ew
 	--infile,talbename,cname:change here
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\可预测性\高德全年数据\dianmen_ew.txt'
+infile 'g:\transport_research\predictability\data_gaode_year\dianmen_ew.txt'
 into table dianmen_ew
 replace
 FIELDS TERMINATED BY ','
@@ -32,7 +32,7 @@ TRAILING NULLCOLS
 	road_id
 )
 --3.cmd   change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\dianmen_ew.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\dianmen_ew.ctl
 
 
 --use dianmen_ew_tsi to compute avgspeed
@@ -50,7 +50,7 @@ create table dianmen_ew_tsi
 		);
 
 --2 cmd  change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\dianmen_ew_tsi.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\dianmen_ew_tsi.ctl
 --3 calc avgspeed
 drop table dianmen_ew_avgspeed;
 create table dianmen_ew_avgspeed as

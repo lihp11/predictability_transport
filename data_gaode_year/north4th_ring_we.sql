@@ -16,7 +16,7 @@ create table north4th_ring_we
 	--infile,talbename,cname:change here
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\可预测性\高德全年数据\north4th_ring_we.txt'
+infile 'g:\transport_research\predictability\data_gaode_year\north4th_ring_we.txt'
 into table north4th_ring_we
 replace
 FIELDS TERMINATED BY ','
@@ -32,7 +32,7 @@ TRAILING NULLCOLS
 	road_id
 )
 --3.cmd   change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\north4th_ring_we.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\north4th_ring_we.ctl
 
 
 --use north4th_ring_we_tsi to compute avgspeed
@@ -50,7 +50,7 @@ create table north4th_ring_we_tsi
 		);
 
 --2 cmd  change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\north4th_ring_we_tsi.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\north4th_ring_we_tsi.ctl
 --3 calc avgspeed
 drop table north4th_ring_we_avgspeed;
 create table north4th_ring_we_avgspeed as

@@ -16,7 +16,7 @@ create table west3th_ring_ns
 	--infile,talbename,cname:change here
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\可预测性\高德全年数据\west3th_ring_ns.txt'
+infile 'g:\transport_research\predictability\data_gaode_year\west3th_ring_ns.txt'
 into table west3th_ring_ns
 replace
 FIELDS TERMINATED BY ','
@@ -32,7 +32,7 @@ TRAILING NULLCOLS
 	road_id
 )
 --3.cmd   change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\west3th_ring_ns.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\west3th_ring_ns.ctl
 
 
 --use west3th_ring_ns_tsi to compute avgspeed
@@ -50,7 +50,7 @@ create table west3th_ring_ns_tsi
 		);
 
 --2 cmd  change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\可预测性\高德全年数据\west3th_ring_ns_tsi.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\west3th_ring_ns_tsi.ctl
 --3 calc avgspeed
 drop table west3th_ring_ns_avgspeed;
 create table west3th_ring_ns_avgspeed as

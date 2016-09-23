@@ -1,6 +1,6 @@
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\可预测性\高德全年数据\west3th_ring_ns.txt'
+infile 'g:\transport_research\predictability\data_gaode_year\west3th_ring_ns.txt'
 into table west3th_ring_ns
 replace
 FIELDS TERMINATED BY ','

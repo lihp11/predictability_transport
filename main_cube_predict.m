@@ -2,10 +2,10 @@
 clc,clear,close all;
 
 % change here!!
-mif_folder = 'G:\transport_research\可预测性\路段选择\路段分向选择\';
+mif_folder = 'G:\transport_research\predictability\roadfrag_select\direction_select\';
 
 % change here!!
-link_matname = 'changan_ew';
+link_matname = 'north4th_ring_we';
 
 load([mif_folder,link_matname,'.mat']);
 shuffled_link = link_connect(link);
@@ -25,7 +25,7 @@ db_output_tsi(cube_longlat,link_matname,num_fetch);
 
 % read tablename_avgspeed from db (after sqlldr)
 % change here!!
-tbname_speed = 'changan_ew_avgspeed';
+tbname_speed = 'west3th_ring_sn_avgspeed';
 
 %% calc_link_road_time
 [avg_tt,tt_sum] = calc_cube_road_time(num_fetch,tbname_speed);
@@ -61,11 +61,9 @@ tbname_speed = 'changan_ew_avgspeed';
         %     close all;
         % end
 
-    % change here : update bin_length,mini,maxi used for vector_to_string
-save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','param');
-
 %% calc road unreliability param (front hour version)
-load([link_matname,'.mat']);    % temp calc for taking front 1hour
+% load([link_matname,'.mat']);    % temp calc for taking front 1hour
+    % change here : update bin_length,mini,maxi used for vector_to_string
 mini = 0;
 maxi = 1500;
 bin_length = 20/40*length(avg_tt);    % single = length of time(s) to discriminate symbols
@@ -73,6 +71,7 @@ interval = 1;
 alpha = 1.2;
 
 param = calc_road_param(tt_sum,bin_length,mini,maxi,interval,alpha);
+save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','param');
 
 %% plot road nth_weekday-nth_5min index colormap
 plot_road_predict(param,link_matname);
