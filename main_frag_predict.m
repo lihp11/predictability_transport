@@ -2,7 +2,7 @@
 clc,clear,close all;
 
 % change here
-data_source = dlmread('g:\transport_research\predictability\data_gaode_year\frag_predict\north4th_ring_we_avgspeed.csv');
+data_source = dlmread('g:\transport_research\predictability\data_gaode_year\frag_predict\north4th_ring_ew_avgspeed.csv');
 % data_source:rownum=many,c1=mesh,c2=roadid,c3=year,
 %c4=month,c5=day,c6=nth_minute,c7=speed
 [row,~] = find(data_source(:,3)==2014);
@@ -12,14 +12,14 @@ data_source(row,:) = [];
 mif_folder = 'G:\transport_research\predictability\roadfrag_select\direction_select\';
 
 % change here
-link_matnmae = 'north4th_ring_we';
+link_matname = 'north4th_ring_ew';
 
-load([mif_folder,link_matnmae,'.mat']);
+load([mif_folder,link_matname,'.mat']);
 shuffled_link = link_connect(link);
 %shuffled_link: struct array:1-longlat(array),2-mesh(num),3-road_id
 %4-node_start,5-node_end,6-road_length
 total_length = sum([shuffled_link.road_length])/100;
-line_longlat = plot_line_road(shuffled_link,link_matnmae);
+line_longlat = plot_line_road(shuffled_link,link_matname);
 %array:c1=long,c2=lat,r_num=num of points+1
 
 %get cube_longlat,change here
@@ -72,5 +72,5 @@ param = calc_road_param(tt_sum,bin_length,mini,maxi,interval,alpha);
 save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','param');
 
 %% plot road nth_weekday-nth_5min index colormap
-plot_road_predict(param,link_matnmae);
-plot_road_predictnorm(param,link_matnmae);
+plot_road_predict(param,link_matname);
+plot_road_predictnorm(param,link_matname);

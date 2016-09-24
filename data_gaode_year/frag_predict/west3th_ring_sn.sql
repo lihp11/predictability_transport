@@ -1,6 +1,6 @@
---1.create south3th_ring_ns table
-drop table south3th_ring_ns;
-create table south3th_ring_ns
+--1.create west3th_ring_sn table
+drop table west3th_ring_sn;
+create table west3th_ring_sn
 	(
 		trace_id varchar2(50),
 		user_id varchar2(30),
@@ -12,12 +12,12 @@ create table south3th_ring_ns
 		road_id varchar2(10)
 	);
 
---2.write south3th_ring_ns.ctl
+--2.write west3th_ring_sn.ctl
 	--infile,talbename,cname:change here
 options(rows=100000,readsize=258000000,bindsize=258000000,parallel=true)
 load data
-infile 'g:\transport_research\predictability\data_gaode_year\south3th_ring_ns.txt'
-into table south3th_ring_ns
+infile 'g:\transport_research\predictability\data_gaode_year\west3th_ring_sn.txt'
+into table west3th_ring_sn
 replace
 FIELDS TERMINATED BY ','
 TRAILING NULLCOLS
@@ -32,28 +32,28 @@ TRAILING NULLCOLS
 	road_id
 )
 --3.cmd   change here
-sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\south3th_ring_ns.ctl
+sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\west3th_ring_sn.ctl
 --4.create index on frequent query col
-create index timeIdx on south3th_ring_ns
+create index timeIdx on west3th_ring_sn
 (
 	sj asc
 );
 
 --5.select very fast
 
-select * from south3th_ring_ns
+select * from west3th_ring_sn
 where sj>to_date('2016-01-01 00:00:00','yyyy-mm-dd hh24:mi:ss')
 	and sj<to_date('2016-01-01 00:05:00','yyyy-mm-dd hh24:mi:ss');
 
 	--select mesh roadid avgspeed
-create table south3th_ring_ns_avgspeed as
+create table west3th_ring_sn_avgspeed as
 select mesh,road_id,
 		to_char(sj,'yyyy') year,
 		to_char(sj,'mm') month,
 		to_char(sj,'dd') day,
 		ceil((to_number(to_char(sj,'hh24'))*60+to_number(to_char(sj,'mi')))/5) nth_5min,
 		avg(abs(speed)) avg_speed
-from south3th_ring_ns
+from west3th_ring_sn
 group by mesh,road_id,
 		to_char(sj,'yyyy'),
 		to_char(sj,'mm'),
@@ -63,4 +63,4 @@ order by mesh,road_id,year,month,day,nth_5min;
 
 --6.sqlplus export big table to csv file
 
-@g:\transport_research\predictability\data_gaode_year\frag_predict\south3th_ring_ns_oracle2csv.sql;
+@g:\transport_research\predictability\data_gaode_year\frag_predict\west3th_ring_sn_oracle2csv.sql;
