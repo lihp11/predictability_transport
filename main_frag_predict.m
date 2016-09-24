@@ -1,18 +1,19 @@
 %% main script of prediction
 clc,clear,close all;
-
+eight_roadname = {'changan_ew','changan_we','dianmen_ew','dianmen_we','north4th_ring_ew','north4th_ring_we','west3th_ring_sn','west3th_ring_ns'};
 % change here
-data_source = dlmread('g:\transport_research\predictability\data_gaode_year\frag_predict\north4th_ring_ew_avgspeed.csv');
-% data_source:rownum=many,c1=mesh,c2=roadid,c3=year,
-%c4=month,c5=day,c6=nth_minute,c7=speed
+link_matname = eight_roadname{8};
+% change here
+eval(['data_source = dlmread(''g:\transport_research\predictability\data_gaode_year\frag_predict\',link_matname,'_avgspeed.csv'');']);
+% data_source = dlmread('g:\transport_research\predictability\data_gaode_year\frag_predict\dianmen_ew_avgspeed.csv');
+	% data_source:rownum=many,c1=mesh,c2=roadid,c3=year,
+	%c4=month,c5=day,c6=nth_minute,c7=speed
 [row,~] = find(data_source(:,3)==2014);
 data_source(row,:) = [];
 [row,~] = find(data_source(:,6)==0);
 data_source(row,:) = [];
 mif_folder = 'G:\transport_research\predictability\roadfrag_select\direction_select\';
 
-% change here
-link_matname = 'north4th_ring_ew';
 
 load([mif_folder,link_matname,'.mat']);
 shuffled_link = link_connect(link);
@@ -74,3 +75,29 @@ save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','param');
 %% plot road nth_weekday-nth_5min index colormap
 plot_road_predict(param,link_matname);
 plot_road_predictnorm(param,link_matname);
+
+
+%% calc person factor between params
+
+load([link_matname,'.mat']);
+for nth_wkday = 1:8
+	eval(['param_w',num2str(nth_wkday),' = [param(:,',num2str(nth_wkday),').lowpredict;param(:,',num2str(nth_wkday),').uppredict;param(:,',num2str(nth_wkday),').std;param(:,',num2str(nth_wkday),').cov;param(:,',num2str(nth_wkday),').BI;param(:,',num2str(nth_wkday),').MI;param(:,',num2str(nth_wkday),').PR;param(:,',num2str(nth_wkday),').lam_skew;param(:,',num2str(nth_wkday),').lam_var]'';']);
+	% param_w1 = [param(:,1).lowpredict;param(:,1).uppredict;param(:,1).std;param(:,1).cov;...
+	% 			param(:,1).BI;param(:,1).MI;param(:,1).PR;param(:,1).lam_skew;param(:,1).lam_var]';
+		% param_w1:array,rnum=288(5min),c1=lowpredict,c2=uppredict,c3=std,
+		% c4=cov,c5=BI,c6=MI,c7=PR,c8=lam_skew,c9=lam_var,all prams not normalized
+	eval(['pearson_param{nth_wkday} = corrcoef(param_w',num2str(nth_wkday),');']);
+	% pearson_param{nth_wkday} = corrcoef(param_w1)
+		%pearson_param:cellvector,num=8
+		%pearson_param{i}:array:9*9,content=pearson factor for ith weekday,8 means total
+end
+save([link_matname,'.mat'],'param_w*','pearson_param','-append');
+% add pearson_param and var start with param_w str to mat files
+
+
+
+
+
+
+
+

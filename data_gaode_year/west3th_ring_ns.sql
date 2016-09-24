@@ -33,8 +33,6 @@ TRAILING NULLCOLS
 )
 --3.cmd   change here
 sqlldr transport@localconnect/www123com control=g:\transport_research\predictability\data_gaode_year\west3th_ring_ns.ctl
-
-
 --use west3th_ring_ns_tsi to compute avgspeed
 
 --1 create table west3th_ring_ns_tsi
