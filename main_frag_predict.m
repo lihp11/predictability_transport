@@ -2,8 +2,8 @@
 clc,clear,close all;
 eight_roadname = {'changan_ew','changan_we','dianmen_ew','dianmen_we','north4th_ring_ew','north4th_ring_we','west3th_ring_sn','west3th_ring_ns'};
 % change here
-link_matname = eight_roadname{8};
-% change here
+link_matname = eight_roadname{4};
+
 eval(['data_source = dlmread(''g:\transport_research\predictability\data_gaode_year\frag_predict\',link_matname,'_avgspeed.csv'');']);
 % data_source = dlmread('g:\transport_research\predictability\data_gaode_year\frag_predict\dianmen_ew_avgspeed.csv');
 	% data_source:rownum=many,c1=mesh,c2=roadid,c3=year,
@@ -12,9 +12,8 @@ eval(['data_source = dlmread(''g:\transport_research\predictability\data_gaode_y
 data_source(row,:) = [];
 [row,~] = find(data_source(:,6)==0);
 data_source(row,:) = [];
+
 mif_folder = 'G:\transport_research\predictability\roadfrag_select\direction_select\';
-
-
 load([mif_folder,link_matname,'.mat']);
 shuffled_link = link_connect(link);
 %shuffled_link: struct array:1-longlat(array),2-mesh(num),3-road_id
@@ -70,7 +69,7 @@ interval = 1;
 alpha = 1.2;
 
 param = calc_road_param(tt_sum,bin_length,mini,maxi,interval,alpha);
-save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','param');
+save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','total_length','param');
 
 %% plot road nth_weekday-nth_5min index colormap
 plot_road_predict(param,link_matname);
@@ -91,7 +90,7 @@ for nth_wkday = 1:8
 		%pearson_param:cellvector,num=8
 		%pearson_param{i}:array:9*9,content=pearson factor for ith weekday,8 means total
 end
-save([link_matname,'.mat'],'param_w*','pearson_param','-append');
+save([link_matname,'.mat'],'param_w*','pearson_param','total_length','-append');
 % add pearson_param and var start with param_w str to mat files
 
 
