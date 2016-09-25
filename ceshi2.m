@@ -61,7 +61,9 @@ function db_output_tsi(cube_longlat,tablename,num_fetch)
 
 end
 
-
+syms x;
+y = -(x*log2(x)+(1-x)*log2(1-x))+(1-x)*log2(20);
+ezplot(y);
 
 
 

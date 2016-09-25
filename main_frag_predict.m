@@ -2,7 +2,7 @@
 clc,clear,close all;
 eight_roadname = {'changan_ew','changan_we','dianmen_ew','dianmen_we','north4th_ring_ew','north4th_ring_we','west3th_ring_sn','west3th_ring_ns'};
 % change here
-link_matname = eight_roadname{4};
+link_matname = eight_roadname{7};
 
 eval(['data_source = dlmread(''g:\transport_research\predictability\data_gaode_year\frag_predict\',link_matname,'_avgspeed.csv'');']);
 % data_source = dlmread('g:\transport_research\predictability\data_gaode_year\frag_predict\dianmen_ew_avgspeed.csv');
@@ -62,6 +62,9 @@ cube_longlat = points_interp(line_longlat,cube_length);
     % tt15_tt85 = quantile(tt_sum(:),[0.15,0.85]);
     % mini = tt15_tt85(1);
     % maxi = tt15_tt85(2);
+
+load([link_matname,'.mat']);    % temp calculation
+
 mini = 0;
 maxi = 1500;
 bin_length = 20/40*total_length;    % single = length of time(s) to discriminate symbols
@@ -69,7 +72,7 @@ interval = 1;
 alpha = 1.2;
 
 param = calc_road_param(tt_sum,bin_length,mini,maxi,interval,alpha);
-save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','total_length','param');
+% save([link_matname,'.mat'],'avg_tt','tt_sum','link_matname','total_length','param');
 
 %% plot road nth_weekday-nth_5min index colormap
 plot_road_predict(param,link_matname);
@@ -78,7 +81,6 @@ plot_road_predictnorm(param,link_matname);
 
 %% calc person factor between params
 
-load([link_matname,'.mat']);
 for nth_wkday = 1:8
 	eval(['param_w',num2str(nth_wkday),' = [param(:,',num2str(nth_wkday),').lowpredict;param(:,',num2str(nth_wkday),').uppredict;param(:,',num2str(nth_wkday),').std;param(:,',num2str(nth_wkday),').cov;param(:,',num2str(nth_wkday),').BI;param(:,',num2str(nth_wkday),').MI;param(:,',num2str(nth_wkday),').PR;param(:,',num2str(nth_wkday),').lam_skew;param(:,',num2str(nth_wkday),').lam_var]'';']);
 	% param_w1 = [param(:,1).lowpredict;param(:,1).uppredict;param(:,1).std;param(:,1).cov;...
