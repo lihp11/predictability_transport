@@ -32,7 +32,7 @@ function plot_road_predict(road_params,road_namestr)
 		ylabel('nth_wkday','Interpreter', 'none');
 		% change here: 8 for total days
         set(gca,'ytick',1:7,'yticklabel',1:7);
-        saveas(gcf,['.\pic_out\',road_namestr,'_sumtt_',index_str{nth_index},'.png']);
+        saveas(gcf,['.\pic_out_min\',road_namestr,'_sumtt_',index_str{nth_index},'.png']);
 
 	end
     %% plot total year index curve
@@ -48,7 +48,7 @@ function plot_road_predict(road_params,road_namestr)
     set(gca,'xtick',[0,72,144,216,288],'xticklabel',[0,72,144,216,288]/12);
 	ylabel('unreliability or predictability','Interpreter', 'none');
 	title([road_namestr,'_index_compare'],'Interpreter', 'none');
-    saveas(gcf,['.\pic_out\',road_namestr,'_index_compare','.png']);
+    saveas(gcf,['.\pic_out_min\',road_namestr,'_index_compare','.png']);
     hold off;
 end
 
