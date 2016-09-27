@@ -65,7 +65,10 @@ syms x;
 y = -(x*log2(x)+(1-x)*log2(1-x))+(1-x)*log2(20);
 ezplot(y);
 
-
+figure;
+plot(1:288,(param_w8(:,2)-min(param_w8(:,2)))/(max(param_w8(:,2)-min(param_w8(:,2)))));
+hold on
+plot(1:288,(param_w8(:,3)-min(param_w8(:,3)))/(max(param_w8(:,3)-min(param_w8(:,3)))));
 
 
 
